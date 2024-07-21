@@ -1,3 +1,4 @@
+import sys
 import boto3
 import botocore
 import logging
@@ -70,7 +71,8 @@ def create_db_backups(dbs: List[str]) -> List[Snapshot]:
 
 
 if __name__ == "__main__":
-    # TODO: pass in db names through cli
-    dbs = ["kraken-aurora-cluster"]
+    # command line execution
+    if len(sys.argv) < 2:
+        print("Usage: python rds_backup.py <db-1> <db-2> <db-2> ...", file=sys.stderr)
+    dbs = sys.argv[1:]
     backups = create_db_backups(dbs)
-    print(backups)
