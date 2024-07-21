@@ -14,8 +14,6 @@ class Snapshot(TypedDict):
     DBClusterSnapshotArn: str
     SnapshotType: str
     SnapshotCreateTime: str
-    AvailabilityZones: List[str]
-    VpcId: str
 ```
 
 ## Installation

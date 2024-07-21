@@ -18,8 +18,6 @@ class Snapshot(TypedDict):
     DBClusterSnapshotArn: str
     SnapshotType: str
     SnapshotCreateTime: str
-    AvailabilityZones: List[str]
-    VpcId: str
 
 
 def create_snapshot(db: str) -> Snapshot:
@@ -41,8 +39,6 @@ def create_snapshot(db: str) -> Snapshot:
             "DBClusterSnapshotArn": data["DBClusterSnapshotArn"],
             "SnapshotType": data["SnapshotType"],
             "SnapshotCreateTime": data["SnapshotCreateTime"].strftime("%Y%m%d%H%M%S"),
-            "AvailabilityZones": data["AvailabilityZones"],
-            "VpcId": data["VpcId"],
         }
     except botocore.exceptions.ClientError as error:
         logger.error(f"Error creating snapshot for {db}: {error}")
@@ -53,8 +49,6 @@ def create_snapshot(db: str) -> Snapshot:
             "DBClusterSnapshotArn": None,
             "SnapshotType": None,
             "SnapshotCreateTime": None,
-            "AvailabilityZones": None,
-            "VpcId": None,
         }
     except botocore.exceptions.ParamValidationError as error:
         raise ValueError(f"The provided parameters are incorrect: {error}")
