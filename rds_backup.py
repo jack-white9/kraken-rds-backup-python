@@ -76,3 +76,6 @@ if __name__ == "__main__":
         print("Usage: python rds_backup.py <db-1> <db-2> <db-2> ...", file=sys.stderr)
     dbs = sys.argv[1:]
     backups = create_db_backups(dbs)
+else:
+    # export create_db_backups to other files
+    __all__ = ["create_db_backups"]
