@@ -6,10 +6,6 @@ from typing import TypedDict, List
 from datetime import datetime, timezone
 
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-
 # define custom snapshot type
 class Snapshot(TypedDict):
     IsSnapshotSuccessful: bool
@@ -30,7 +26,7 @@ def create_snapshot(db: str) -> Snapshot:
             DBClusterIdentifier=db,
             Tags=[{"Key": "Database", "Value": db}],
         )
-        logger.info(f"Snapshot created: {snapshot_id}")
+        print(f"Snapshot created: {snapshot_id}", file=sys.stdout)
         data = response["DBClusterSnapshot"]
         return {
             "IsSnapshotSuccessful": True,
@@ -41,7 +37,7 @@ def create_snapshot(db: str) -> Snapshot:
             "SnapshotCreateTime": data["SnapshotCreateTime"].strftime("%Y%m%d%H%M%S"),
         }
     except botocore.exceptions.ClientError as error:
-        logger.error(f"Error creating snapshot for {db}: {error}")
+        print(f"Error creating snapshot for {db}: {error}", file=sys.stderr)
         return {
             "IsSnapshotSuccessful": False,
             "DBClusterSnapshotIdentifier": snapshot_id,
