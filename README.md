@@ -16,7 +16,13 @@ class Snapshot(TypedDict):
     SnapshotCreateTime: str
 ```
 
+## Unit Testing
+
+Unit tests are performed using Pytest as the test runner and Moto to mock AWS services. Tests can be viewed in [test_rds_backup.py](./test_rds_backup.py).
+
 ## Installation
+
+### Manual Installation
 
 1. Setup virtual environment. _**Note**: Although Python 3.8 has been used for this example, the script is forward-compatible with versions >= 3.8. Use your preferred version._
 
@@ -31,14 +37,34 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### Docker Image
+
+1. Build Docker image called `rds_backup`.
+
+```sh
+docker build -t rds_backup .
+```
+
 ## Usage
 
-### Command Line Usage
+### Command Line Usage (Manual)
 
 Invoke the `rds_backup.py` script with a space-separated list of strings.
 
 ```sh
 python rds_backup.py db-1 db-2 db-3
+```
+
+### Command Line Usage (Docker)
+
+Run the `rds_backup` Docker image from [Docker Installation](#docker-installation), passing `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_DEFAULT_REGION` as required.
+
+```sh
+docker run \
+  -e AWS_ACCESS_KEY_ID=<aws_access_key_id> \
+  -e AWS_SECRET_ACCESS_KEY=<aws_secret_access_key> \
+  -e AWS_DEFAULT_REGION=<aws_default_region> \
+  rds_backup db-1 db-2 db-3
 ```
 
 ### Import Usage
