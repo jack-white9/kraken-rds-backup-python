@@ -20,6 +20,12 @@ class Snapshot(TypedDict):
 
 Unit tests are performed using Pytest as the test runner and Moto to mock AWS services. Tests can be viewed in [test_rds_backup.py](./test_rds_backup.py).
 
+Run unit tests using the following command:
+
+```sh
+pytest
+```
+
 ## Installation
 
 ### Manual Installation
